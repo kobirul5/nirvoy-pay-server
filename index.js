@@ -79,6 +79,39 @@ async function run() {
     
         //  verify related api
 
+        app.get('/admin/verify/:email', async(req,res)=>{
+            const email = req.params.email; 
+            const query = {email: email}
+            const result = await userCollection.findOne(query)
+            let admin = false;
+            if(result?.role === "admin") {
+                admin = true;
+            }
+            res.send(admin)
+        })
+
+        app.get('/agent/verify/:email', async(req,res)=>{
+            const email = req.params.email; 
+            const query = {email: email}
+            const result = await userCollection.findOne(query)
+            let hr = false;
+            if(result?.role === "hr") {
+                hr = true;
+            }
+            res.send(hr)
+        })
+        
+        app.get('/user/verify/:email', async(req,res)=>{
+            const email = req.params.email; 
+            const query = {email: email}
+            const result = await userCollection.findOne(query)
+            let user = false;
+            if(result?.role === "user") {
+                user = true;
+            }
+            res.send(user)
+        })
+
         // Connect the client to the server	(optional starting in v4.7)
         // await client.connect();
         // Send a ping to confirm a successful connection
